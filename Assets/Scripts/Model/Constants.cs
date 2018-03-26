@@ -13,6 +13,13 @@
         /// </summary>
         public const int DEATH_Y = -3;
 
+        public const int NUM_WALKERS = 5;
+        public const int SPAWN_DELAY = 2;
+
         public const string PREFAB_LVL01 = "Prefabs/level01";
+        public const string PREFAB_WALKER = "Prefabs/walker01";
+
+        public const string TILE_SPAWN = "Gameboy Tileset_0";
+        public const string TILE_GOAL = "Gameboy Tileset_55";
     }
 }
