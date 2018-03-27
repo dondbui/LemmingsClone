@@ -29,7 +29,8 @@ public class Engine : MonoBehaviour
         Debug.Log("Origin: " + tileMap.origin);
         Debug.Log("Center: " + mapBounds.center);
 
-        ScanTiles();
+        //ScanTiles();
+        InitSpawnPosFromGameObject();
         SpawnWalkers();
 	}
 	
@@ -38,6 +39,13 @@ public class Engine : MonoBehaviour
     {
 		
 	}
+
+    private void InitSpawnPosFromGameObject()
+    {
+        GameObject spawnObj = GameObject.Find("spawn");
+        Vector3Int pos = tileMap.WorldToCell(spawnObj.transform.position);
+        spawnPos = new Vector3Int(pos.x, pos.y - 1, pos.z);
+    }
 
     private void ScanTiles()
     {
@@ -68,6 +76,7 @@ public class Engine : MonoBehaviour
                 }
                 
 
+                // If it's a spawn tile then set the spawn tile and position
                 if (tile.sprite.name == Constants.TILE_SPAWN)
                 {
                     Debug.Log("Tile Sprite: " + tile.sprite + ": " + scratchPos);
@@ -75,7 +84,6 @@ public class Engine : MonoBehaviour
 
                     spawnPos = new Vector3Int(x, y, 0);
                 }
-
             }
         }
 

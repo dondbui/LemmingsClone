@@ -82,7 +82,7 @@ public class CharWalker : MonoBehaviour
         if (transform.position.y < Constants.DEATH_Y)
         {
             Debug.Log("Character Fell too far!! RIP");
-            GameObject.Destroy(this);
+            GameObject.Destroy(this.gameObject);
         }
     }
 
@@ -113,10 +113,7 @@ public class CharWalker : MonoBehaviour
             return;
         }
 
-        if (collision.relativeVelocity.y != 0)
-        {
-            return;
-        }
+        
 
         GameObject colObj = collision.gameObject;
 
@@ -132,7 +129,21 @@ public class CharWalker : MonoBehaviour
         if (colObj.tag == "WorldObject")
         {
             Debug.Log("Character Hit WorldObject: " + colObj.name);
+
+            if (colObj.name == "goal")
+            {
+                Debug.Log("Goal Reached");
+                GameObject.Destroy(this.gameObject);
+                return;
+            }
+
+            if (collision.relativeVelocity.y != 0)
+            {
+                return;
+            }
+
             HandleWorldObjectCollision(colObj);
+            
         }
     }
 
