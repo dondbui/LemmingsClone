@@ -1,6 +1,8 @@
 ﻿using Model;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using WorldObjects;
 
 public class Engine : MonoBehaviour
 {
@@ -11,6 +13,8 @@ public class Engine : MonoBehaviour
     private TileBase goalTile;
 
     private int walkersMade = 0;
+
+    public static List<GameObject> attractions;
 
 	// Use this for initialization
 	public void Start()
@@ -31,6 +35,7 @@ public class Engine : MonoBehaviour
 
         //ScanTiles();
         InitSpawnPosFromGameObject();
+        InitAttractionObjects();
         SpawnWalkers();
 	}
 	
@@ -45,6 +50,23 @@ public class Engine : MonoBehaviour
         GameObject spawnObj = GameObject.Find("spawn");
         Vector3Int pos = tileMap.WorldToCell(spawnObj.transform.position);
         spawnPos = new Vector3Int(pos.x, pos.y - 1, pos.z);
+    }
+
+    /// <summary>
+    /// Initializes the attractions List
+    /// </summary>
+    private void InitAttractionObjects()
+    {
+        // Figure out what attraction objects we got in the level
+        AttractionObject[] attr = GameObject.FindObjectsOfType<AttractionObject>();
+
+        attractions = new List<GameObject>();
+
+        for (int i = 0; i < attr.Length; i++)
+        {
+            AttractionObject a = attr[i];
+            attractions.Add(a.gameObject);
+        }
     }
 
     private void ScanTiles()

@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212888630168836994}
   - component: {fileID: 61393985814117912}
   - component: {fileID: 50586815410865182}
-  - component: {fileID: 114286715209182628}
+  - component: {fileID: 114887359913798090}
   m_Layer: 0
   m_Name: jellyroll01
   m_TagString: WorldObject
@@ -88,7 +88,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.16, y: 0.16}
   m_EdgeRadius: 0
---- !u!114 &114286715209182628
+--- !u!114 &114887359913798090
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -96,10 +96,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1685691214286832}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3b11580f14f20c4dac57e23d11cb320, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f0bcfad8b8ab984aa46415844cb9257, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tagger: {fileID: 0}
+  tagger:
+    tags: 
 --- !u!212 &212888630168836994
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -114,7 +115,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

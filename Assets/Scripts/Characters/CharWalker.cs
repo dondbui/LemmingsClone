@@ -17,6 +17,11 @@ public class CharWalker : MonoBehaviour
     private Vector3 scratchRefPos = new Vector3();
     private Vector3 scratchScale = new Vector3(1, 1, 1);
 
+    /// <summary>
+    /// Usually an attraction that the walker is heading toward
+    /// </summary>
+    private GameObject target;
+
     // Use this for initialization
     public void Start()
     {
@@ -55,7 +60,7 @@ public class CharWalker : MonoBehaviour
         if (walkSpeed > 0)
         {
             scratchRefPos.x -= bc.size.x / 2;
-            
+
             Vector3Int cellPos = tileMap.WorldToCell(scratchRefPos);
 
             Vector3Int cellRight = new Vector3Int(cellPos.x + 1, cellPos.y, cellPos.z);
@@ -86,6 +91,76 @@ public class CharWalker : MonoBehaviour
         }
     }
 
+    public void FixedUpdate()
+    {
+        // figure out what attraction is nearest and try heading to it.
+
+        // no attractions then don't care
+        if (Engine.attractions == null)
+        {
+            return;
+        }
+
+
+        int count = Engine.attractions.Count;
+
+        float nearestDist = 0;
+
+        for (int i = 0; i < count; i++)
+        {
+            GameObject attraction = Engine.attractions[i];
+
+            float dist = Vector3.Distance(gameObject.transform.position, attraction.transform.position);
+
+            // For the first one we'll just 
+            if (i == 0 || dist < nearestDist)
+            {
+                nearestDist = dist;
+                target = attraction;
+                continue;
+            }
+        }
+
+        // Figure out what your heading is
+        Vector3 heading = target.transform.position - gameObject.transform.position;
+
+        // Get the prependicular
+        Vector3 perp = Vector3.Cross(gameObject.transform.forward, heading);
+
+        // Getting the Dot product for the perpendicular and the up gets you the direction
+        float dir = Vector3.Dot(perp, gameObject.transform.up);
+
+        string dirName = "";
+
+        // If it's greater than 0 then it's to the right
+        if (dir > 0)
+        {
+            dirName = "Right";
+
+            // If we're walking to the left then switch direction
+            if (walkSpeed < 0)
+            {
+                walkSpeed *= -1;
+                scratchScale.x *= -1;
+                transform.localScale = scratchScale;
+            }
+}
+        else
+        {
+            dirName = "Left";
+
+            if (walkSpeed > 0)
+            {
+                walkSpeed *= -1;
+                scratchScale.x *= -1;
+                transform.localScale = scratchScale;
+            }
+        }
+
+        Debug.Log("Target: " + target.name);
+        Debug.Log("Direction: " + dirName);
+    }
+
     public void OnMouseDown()
     {
         //Debug.Log("Character: " + name + " has been clicked");
@@ -112,8 +187,6 @@ public class CharWalker : MonoBehaviour
         {
             return;
         }
-
-        
 
         GameObject colObj = collision.gameObject;
 

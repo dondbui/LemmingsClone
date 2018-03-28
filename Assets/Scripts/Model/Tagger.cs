@@ -6,6 +6,7 @@ namespace Model
 {
     public enum TagTypes
     {
+        Attraction,
         Character,
         Obstacle,
         Other,
